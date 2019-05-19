@@ -15,6 +15,8 @@ namespace ISSK_2_0.Models
         public bool IsActive { get; set; }
         public string ActivationCode { get; set; }
         public virtual ConductorData ConductorData { get; set; }
+        public virtual ICollection<Role> Roles { get; set; }
+        public virtual ICollection<Message> Messages { get; set; }
     }
 
     public class ConductorData
@@ -25,8 +27,7 @@ namespace ISSK_2_0.Models
         public string LastName { get; set; }
         public DateTime BirthDate { get; set; }
         public string Pesel { get; set; }
-        public bool IsTrained { get; set; }
-        public virtual ICollection<Role> Roles { get; set; }
+        public bool IsTrained { get; set; }       
         public string PhoneNumber { get; set; }
         public string Avatar { get; set; }
         public int ConductorId { get; set; }
