@@ -7,5 +7,6 @@ namespace ISSK_2_0.Models
 {
     public class Set
     {
+        public int Id { get; set; }
     }
 }
