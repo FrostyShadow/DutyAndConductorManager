@@ -7,7 +7,7 @@ namespace ISSK_2_0.Models
 {
     public class Conductor
     {
-        public int Id { get; set; }
+        public int ConductorId { get; set; }
         public int Code { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
@@ -17,11 +17,15 @@ namespace ISSK_2_0.Models
         public virtual ConductorData ConductorData { get; set; }
         public virtual ICollection<Role> Roles { get; set; }
         public virtual ICollection<Message> Messages { get; set; }
+        public virtual ICollection<BrigadeConductor> BrigadeConductors { get; set; }
+        public virtual ICollection<Notification> Notifications { get; set; }
+        public virtual ICollection<NotificationRecipient> NotificationRecipients { get; set; }
+        public virtual ICollection<MessageRecipient> MessageRecipients { get; set; }
     }
 
     public class ConductorData
     {
-        public int Id { get; set; }
+        public int ConductorDataId { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }
