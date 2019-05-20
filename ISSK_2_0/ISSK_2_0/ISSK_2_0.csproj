@@ -137,10 +137,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201905201643299_Initial-migration.cs" />
-    <Compile Include="Migrations\201905201643299_Initial-migration.Designer.cs">
-      <DependentUpon>201905201643299_Initial-migration.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Brigade.cs" />
     <Compile Include="Models\Conductor.cs" />
@@ -245,9 +241,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201905201643299_Initial-migration.resx">
-      <DependentUpon>201905201643299_Initial-migration.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

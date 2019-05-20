@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -25,6 +26,7 @@ namespace ISSK_2_0.Models
 
     public class ConductorData
     {
+        [ForeignKey("Conductor")]
         public int ConductorDataId { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
@@ -34,7 +36,6 @@ namespace ISSK_2_0.Models
         public bool IsTrained { get; set; }       
         public string PhoneNumber { get; set; }
         public string Avatar { get; set; }
-        public int ConductorId { get; set; }
         public virtual Conductor Conductor { get; set; }
     }
 }

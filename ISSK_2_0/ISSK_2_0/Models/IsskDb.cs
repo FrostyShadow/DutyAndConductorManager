@@ -35,44 +35,52 @@ namespace ISSK_2_0.Models
                     m.MapRightKey("RoleId");
                 });
             modelBuilder.Entity<Conductor>()
-                .HasRequired(u => u.ConductorData)
-                .WithRequiredPrincipal(r => r.Conductor)
-                .WillCascadeOnDelete(true);
-            modelBuilder.Entity<Conductor>()
-                .HasMany(u => u.Messages)
-                .WithRequired(r => r.SenderConductor)
-                .WillCascadeOnDelete(false);
+                .HasOptional(u => u.ConductorData)
+                .WithRequired(r => r.Conductor)
+                .WillCascadeOnDelete(true);    
             modelBuilder.Entity<Conductor>()
                 .HasMany(u => u.BrigadeConductors)
                 .WithRequired(r => r.Conductor)
+                .HasForeignKey(u => u.ConductorId)
                 .WillCascadeOnDelete(true);
             modelBuilder.Entity<Conductor>()
                 .HasMany(u => u.MessageRecipients)
                 .WithRequired(r => r.RecipientConductor)
+                .HasForeignKey(u => u.RecipientId)
                 .WillCascadeOnDelete(true);
             modelBuilder.Entity<Conductor>()
                 .HasMany(u => u.NotificationRecipients)
                 .WithRequired(r => r.Conductor)
+                .HasForeignKey(u => u.ConductorId)
                 .WillCascadeOnDelete(true);
             modelBuilder.Entity<Brigade>()
                 .HasMany(u => u.BrigadeConductors)
                 .WithRequired(r => r.Brigade)
+                .HasForeignKey(u => u.BrigadeId)
                 .WillCascadeOnDelete(true);
             modelBuilder.Entity<Brigade>()
                 .HasRequired(u => u.Line)
                 .WithMany(r => r.Brigades)
+                .HasForeignKey(u => u.LineId)
                 .WillCascadeOnDelete(true);
             modelBuilder.Entity<Brigade>()
                 .HasRequired(u => u.VehicleSet)
                 .WithMany(r => r.Brigades)
+                .HasForeignKey(u => u.VehicleSetId)
                 .WillCascadeOnDelete(true);
             modelBuilder.Entity<Line>()
                 .HasRequired(u => u.LineType)
                 .WithMany(r => r.Lines)
+                .HasForeignKey(u => u.LineTypeId)
                 .WillCascadeOnDelete(true);
+            modelBuilder.Entity<Message>()
+                .HasRequired(u => u.SenderConductor)
+                .WithMany(r => r.Messages)
+                .HasForeignKey(u => u.SenderId);
             modelBuilder.Entity<Message>()
                 .HasMany(u => u.MessageRecipients)
                 .WithRequired(r => r.Message)
+                .HasForeignKey(u => u.MessageId)
                 .WillCascadeOnDelete(true);
             modelBuilder.Entity<Message>()
                 .HasOptional(u => u.ParentMessage)
@@ -82,22 +90,27 @@ namespace ISSK_2_0.Models
             modelBuilder.Entity<Notification>()
                 .HasMany(u => u.NotificationRecipients)
                 .WithRequired(r => r.Notification)
+                .HasForeignKey(u => u.NotificationId)
                 .WillCascadeOnDelete(true);
             modelBuilder.Entity<Notification>()
                 .HasRequired(u => u.CreatorConductor)
                 .WithMany(r => r.Notifications)
+                .HasForeignKey(u => u.CreatorId)
                 .WillCascadeOnDelete(false);
             modelBuilder.Entity<Set>()
                 .HasMany(u => u.SetVehicles)
                 .WithRequired(r => r.Set)
+                .HasForeignKey(u => u.VehicleId)
                 .WillCascadeOnDelete(true);
             modelBuilder.Entity<Vehicle>()
                 .HasRequired(u => u.VehicleType)
                 .WithMany(r => r.Vehicles)
+                .HasForeignKey(u => u.TypeId)
                 .WillCascadeOnDelete(true);
             modelBuilder.Entity<Vehicle>()
                 .HasMany(u => u.SetVehicles)
                 .WithRequired(r => r.Vehicle)
+                .HasForeignKey(u => u.SetId)
                 .WillCascadeOnDelete(true);
         }
     }

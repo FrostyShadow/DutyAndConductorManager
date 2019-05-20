@@ -10,7 +10,7 @@ namespace ISSK_2_0.Models
     public class Message
     {
         public int MessageId { get; set; }
-        public string Subject { get; set; }
+        public string Subject { get; set; }        
         public int SenderId { get; set; }
         public virtual Conductor SenderConductor { get; set; }
         public string MessageBody { get; set; }

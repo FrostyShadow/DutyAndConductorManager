@@ -9,7 +9,7 @@ namespace ISSK_2_0.Models
     {
         public int LineId { get; set; }
         public string LineNumber { get; set; }
-        public int TypeId { get; set; }
+        public int LineTypeId { get; set; }
         public virtual LineType LineType { get; set; }
         public DateTime StartDateTime { get; set; }
         public DateTime EndDateTime { get; set; }
