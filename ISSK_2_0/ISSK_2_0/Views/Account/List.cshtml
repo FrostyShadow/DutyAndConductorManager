@@ -1,0 +1,90 @@
+﻿@model IEnumerable<ISSK_2_0.Models.Conductor>
+
+@{
+    ViewBag.Title = "Lista konduktorów";
+}
+
+<div class="jumbotron">
+    <h2>@ViewBag.Title</h2>
+    @if (HttpContext.Current.User.IsInRole("Moderator"))
+    {
+        <p>
+            @Html.ActionLink("Dodaj nowego konduktora", "Create", "Account", new {@class = "btn btn-primary"})
+        </p>
+    }
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">
+                @Html.DisplayNameFor(m => m.Code)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(m => m.ConductorData.FirstName)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(m => m.ConductorData.MiddleName)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(m => m.ConductorData.LastName)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(m => m.Email)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(m => m.ConductorData.PhoneNumber)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(m => m.Roles)
+            </th>
+            @if (HttpContext.Current.User.IsInRole("Moderator"))
+            {
+                <th scope="col">
+                    @Html.DisplayNameFor(m => m.ActivationCode)
+                </th>
+            }
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        
+        <tbody>
+        @if (Model != null)
+        {
+             foreach (var item in Model)
+             {
+                 <tr>
+                     <td>
+                         @Html.DisplayFor(i => item.Code)
+                     </td>
+                     <td>
+                         @Html.DisplayFor(i => item.ConductorData.FirstName)
+                     </td>
+                     <td>
+                         @Html.DisplayFor(i => item.ConductorData.MiddleName)
+                     </td>
+                     <td>
+                         @Html.DisplayFor(i => item.ConductorData.LastName)
+                     </td>
+                     <td>
+                         @Html.DisplayFor(i => item.Email)
+                     </td>
+                     <td>
+                         @Html.DisplayFor(i => item.ConductorData.PhoneNumber)
+                     </td>
+                     <td>
+                         @Html.DisplayFor(i => item.Roles)
+                     </td>
+                     @if (HttpContext.Current.User.IsInRole("Moderator"))
+                     {
+                         <td>
+                             @Html.DisplayFor(i => item.ActivationCode)
+                         </td>
+                     }
+                     <td>
+                         @Html.ActionLink("Edytuj", "EditUser", "Account", new {id = @item.ConductorId}, new {@class = "btn btn-warning"})
+                     </td>
+                 </tr>
+             }
+        }
+        </tbody>
+    </table>
+</div>

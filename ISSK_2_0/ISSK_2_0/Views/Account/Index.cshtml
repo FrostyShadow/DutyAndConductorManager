@@ -1,0 +1,25 @@
+﻿@model ISSK_2_0.Models.AccountView
+
+@{
+    ViewBag.Title = "Profil";
+}
+
+<div class="jumbotron">
+    <div class="row">
+        <div class="col-md-2">
+            <img src="@Model.Avatar" classs="img-thumbnail" alt="@Model.FirstName @Model.LastName"/>
+        </div>
+        <div class="col-md-8 offset-2">
+            <p class="h2">
+                @Model.FirstName @Model.MiddleName @Model.LastName
+            </p>
+            <p class="h3">
+                @Model.Email
+            </p>
+            <p class="h3">
+                @Model.RoleName.ToString()
+            </p>
+            @Html.ActionLink("Edytuj profil", "Edit", "Account", new { @class = "btn btn-primary"})
+        </div>
+    </div>
+</div>

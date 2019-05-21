@@ -1,0 +1,28 @@
+﻿@model ISSK_2_0.Models.RegisterView
+
+@{
+    ViewBag.Title = "Rejestracja";
+}
+
+<div class="jumbotron">
+    <h2>@ViewBag.Title</h2>
+    @using (Html.BeginForm(null, null, new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary()
+        <div class="form-group">
+            @Html.LabelFor(m => m.Email)
+            @Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.ActivationCode)
+            @Html.EditorFor(m => m.ActivationCode, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(m => m.ActivationCode, "", new { @class = "text-danger" })
+            <small id="activationCodeHelp" class="form-text text-muted">Kod aktywacyjny powinieneś otrzymać od koordynatora.</small>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Aktywuj konto</button>
+    }
+</div>

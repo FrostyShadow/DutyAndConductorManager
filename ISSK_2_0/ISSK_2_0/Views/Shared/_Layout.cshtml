@@ -43,12 +43,12 @@
                             </div>
                         </li>
                     }
-                    <li class="nav-item">@Html.ActionLink("Wyloguj się", "SignOut", "Account", new {}, new { @class = "nav-link"})</li>
+                    <li class="nav-item">@Html.ActionLink("Wyloguj się", "LogOut", "Account", new {}, new { @class = "nav-link"})</li>
                 }
                 else
                 {
-                    <li class="nav-item">@Html.ActionLink("Logowanie", "SignIn", "Account", new {}, new { @class = "nav-link"})</li>
-                    <li class="nav-item">@Html.ActionLink("Rejestracja", "SignUp", "Account", new {}, new { @class = "nav-link"})</li>
+                    <li class="nav-item">@Html.ActionLink("Logowanie", "Login", "Account", new {}, new { @class = "nav-link"})</li>
+                    <li class="nav-item">@Html.ActionLink("Rejestracja", "Register", "Account", new {}, new { @class = "nav-link"})</li>
                 }
             </ul>
         </div>
