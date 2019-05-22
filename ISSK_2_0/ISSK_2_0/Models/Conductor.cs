@@ -29,6 +29,11 @@ namespace ISSK_2_0.Models
         public virtual ICollection<Notification> Notifications { get; set; }
         public virtual ICollection<NotificationRecipient> NotificationRecipients { get; set; }
         public virtual ICollection<MessageRecipient> MessageRecipients { get; set; }
+
+        public Conductor()
+        {
+            IsActive = false;
+        }
     }
 
     public class ConductorData
@@ -41,13 +46,22 @@ namespace ISSK_2_0.Models
         public string MiddleName { get; set; }
         [Display(Name = "Nazwisko")]
         public string LastName { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime BirthDate { get; set; }
         public string Pesel { get; set; }
         public bool IsTrained { get; set; }       
         [Display(Name = "Numer telefonu")]
         public string PhoneNumber { get; set; }
         public string Avatar { get; set; }
+        [Display(Name = "Miasto")]
+        public string City { get; set; }
         public virtual Conductor Conductor { get; set; }
+
+        public ConductorData()
+        {
+            IsTrained = false;
+            Avatar = @"/Content/Images/DefaultAvatar.png";
+        }
     }
 
     public class LoginView
@@ -97,5 +111,30 @@ namespace ISSK_2_0.Models
         public string Avatar { get; set; }
         public string ActivationCode { get; set; }
         public List<string> RoleName { get; set; }
+    }
+
+    public class CreateView
+    {
+        [Display(Name = "Nr legitymacji")]
+        public int Code { get; set; }
+        [Display(Name = "Imię")]
+        public string FirstName { get; set; }
+        [Display(Name = "Nazwisko")]
+        public string LastName { get; set; }
+        [Display(Name = "Adres email")]
+        [Required(ErrorMessage = "Adres Email jest wymagany!")]
+        [DataType(DataType.EmailAddress, ErrorMessage = "Nieprawidłowy format adresu Email")]
+        public string Email { get; set; }
+
+        [Display(Name = "Data urodzenia")]
+        [Required(ErrorMessage = "Data urodzenia jest wymagana")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [MinimumAge(13)]
+        public DateTime BirthDate { get; set; }
+        [Display(Name = "Miasto")]
+        [Required(ErrorMessage = "Miasto jest wymagane!")]
+        public string City { get; set; }
+
     }
 }

@@ -145,6 +145,7 @@
     <Compile Include="Models\CustomMembershipUser.cs" />
     <Compile Include="Models\CustomPrincipal.cs" />
     <Compile Include="Models\CustomRole.cs" />
+    <Compile Include="Models\CustomValidationAttributes.cs" />
     <Compile Include="Models\IsskDb.cs" />
     <Compile Include="Models\Line.cs" />
     <Compile Include="Models\Message.cs" />
@@ -237,6 +238,8 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Account\List.cshtml" />
+    <Content Include="Views\Account\Create.cshtml" />
+    <Content Include="Views\Account\CreateResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

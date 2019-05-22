@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace ISSK_2_0.Models
@@ -24,6 +25,7 @@ namespace ISSK_2_0.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Properties<DateTime>().Configure(c => c.HasColumnType("datetime2"));
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
             modelBuilder.Entity<Conductor>()
                 .HasMany(u => u.Roles)
