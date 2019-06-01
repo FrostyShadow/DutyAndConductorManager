@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Web;
 using System.Web.UI.WebControls;
 
@@ -46,7 +47,10 @@ namespace ISSK_2_0.Models
         public string MiddleName { get; set; }
         [Display(Name = "Nazwisko")]
         public string LastName { get; set; }
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None), DataMember]
+        [Column(TypeName = "datetime2")]
         public DateTime BirthDate { get; set; }
         public string Pesel { get; set; }
         public bool IsTrained { get; set; }       

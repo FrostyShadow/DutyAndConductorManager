@@ -73,7 +73,10 @@
                          @Html.DisplayFor(i => item.ConductorData.PhoneNumber)
                      </td>
                      <td>
-                         @Html.DisplayFor(i => item.Roles)
+                         @foreach (var role in item.Roles)
+                         {
+                             @Html.DisplayFor(r => role.Name)
+                         }
                      </td>
                      @if (HttpContext.Current.User.IsInRole("Moderator"))
                      {
