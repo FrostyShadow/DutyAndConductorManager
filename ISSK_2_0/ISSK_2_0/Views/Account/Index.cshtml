@@ -7,17 +7,17 @@
 <div class="jumbotron">
     <div class="row">
         <div class="col-md-2">
-            <img src="@Model.Avatar" classs="img-thumbnail" alt="@Model.FirstName @Model.LastName"/>
+            <img src="@Model.Avatar" class="img-thumbnail" alt="@Model.FirstName @Model.LastName"/>
         </div>
-        <div class="col-md-8 offset-2">
+        <div class="col-md-9 offset-1">
             <p class="h2">
                 @Model.FirstName @Model.MiddleName @Model.LastName
             </p>
-            <p class="h3">
-                @Model.Email
+            <p>
+                <strong>Adres Email:</strong> @Model.Email
             </p>
-            <p class="h3">
-                @Model.RoleName.ToString()
+            <p>
+                <strong>Rola:</strong> @Html.DisplayFor(i => Model.RoleName[Model.RoleName.Count - 1])
             </p>
             @Html.ActionLink("Edytuj profil", "Edit", "Account", new { @class = "btn btn-primary"})
         </div>

@@ -107,6 +107,7 @@ namespace ISSK_2_0.Models
 
     public class AccountView
     {
+        public int ConductorId { get; set; }
         public int Code { get; set; }
         public string Email { get; set; }
         public string FirstName { get; set; }

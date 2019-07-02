@@ -23,7 +23,7 @@ namespace ISSK_2_0.Models
                 var selectedUser = (db.Conductors.Include("Roles").Where(us =>
                     string.Compare(username, us.Email, StringComparison.OrdinalIgnoreCase) == 0)).FirstOrDefault();
                 if (selectedUser != null)
-                    userRoles = new[] {selectedUser.Roles.Select(r => r.Name).ToString()};
+                    userRoles = new[] {selectedUser.Roles.Select(r => r.DisplayName).ToString()};
                 return userRoles.ToArray();
             }
         }

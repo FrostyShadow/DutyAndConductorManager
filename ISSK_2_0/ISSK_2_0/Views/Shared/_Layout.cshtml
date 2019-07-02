@@ -21,12 +21,13 @@
                 {
                     <li class="nav-item">@Html.ActionLink("Służby konduktorskie", "Index", "Duty", new {}, new { @class = "nav-link"})</li>
                     <li class="nav-item dropdown">
-                        <a class="nav-item dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="False">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="False">
                             Panel użytkownika
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            @Html.ActionLink("Zobacz profil", "Index", "Account", new {}, new { @class = "dropdown-item"})
-                            @Html.ActionLink("Wiadomości", "Index", "Message", new {}, new { @class = "dropdown-item"})
+                            @Html.ActionLink("Zobacz profil", "Index", "Account", new { }, new { @class = "dropdown-item" })
+                            @Html.ActionLink("Wiadomości", "Index", "Message", new { }, new { @class = "dropdown-item" })
+                            @Html.ActionLink("Lista konduktorów", "List", "Account", new { }, new { @class = "dropdown-item" })
                         </div>
                     </li>
                     if (User.IsInRole("Moderator"))

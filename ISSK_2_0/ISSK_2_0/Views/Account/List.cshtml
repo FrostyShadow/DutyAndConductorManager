@@ -35,7 +35,7 @@
             <th scope="col">
                 @Html.DisplayNameFor(m => m.Roles)
             </th>
-            @if (HttpContext.Current.User.IsInRole("Moderator"))
+            @if (HttpContext.Current.User.IsInRole("Moderator, Administrator"))
             {
                 <th scope="col">
                     @Html.DisplayNameFor(m => m.ActivationCode)
@@ -73,12 +73,13 @@
                          @Html.DisplayFor(i => item.ConductorData.PhoneNumber)
                      </td>
                      <td>
-                         @foreach (var role in item.Roles)
+                         @foreach (var r in item.Roles)
                          {
-                             @Html.DisplayFor(r => role.Name)
+                             @Html.DisplayFor(d => r.DisplayName)
+                             <br/>
                          }
                      </td>
-                     @if (HttpContext.Current.User.IsInRole("Moderator"))
+                     @if (HttpContext.Current.User.IsInRole("Moderator, Administrator"))
                      {
                          <td>
                              @Html.DisplayFor(i => item.ActivationCode)

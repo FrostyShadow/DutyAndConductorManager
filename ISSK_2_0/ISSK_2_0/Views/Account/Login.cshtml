@@ -25,4 +25,6 @@
             <button type="submit" class="btn btn-primary">Zaloguj się</button>
             @Html.ActionLink("Rejestracja", "Register", "Account", new { @class = "btn btn-secondary"})
         }
+        
+        @HttpContext.Current.User.Identity.Name
     </div>

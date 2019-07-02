@@ -65,6 +65,7 @@ namespace ISSK_2_0.Models
                         string.Compare(newSavedPasswordHash, us.Password, StringComparison.OrdinalIgnoreCase) == 0 &&
                         us.IsActive))
                     .FirstOrDefault();
+
                 return (user != null);
 
             }
@@ -84,8 +85,8 @@ namespace ISSK_2_0.Models
         {
             using (var dbContext = new IsskDb())
             {
-                var user = (dbContext.Conductors.Where(us =>
-                    string.Compare(username, us.Email, StringComparison.OrdinalIgnoreCase) == 0)).FirstOrDefault();
+                var user = dbContext.Conductors.Include("ConductorData").Include("Roles").FirstOrDefault(us =>
+                    string.Compare(username, us.Email, StringComparison.OrdinalIgnoreCase) == 0);
 
                 if (user == null)
                     return null;
