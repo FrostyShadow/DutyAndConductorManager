@@ -13,7 +13,7 @@ namespace ISSK_2_0.Controllers
     public class AccountController : Controller
     {
         // GET: Account
-        [Authorize]
+        [CustomAuthorize(Roles = "Conductor, Manager, Moderator, Administrator")]
         public ActionResult Index()
         {
             var user = (CustomMembershipUser) Membership.GetUser(HttpContext.User.Identity.Name, true);
@@ -144,14 +144,14 @@ namespace ISSK_2_0.Controllers
             }
         }
 
-        [Authorize]
+        [CustomAuthorize]
         [HttpGet]
         public ActionResult ChangePassword(string returnUrl = "")
         {
             return View();
         }
 
-        [Authorize]
+        [CustomAuthorize]
         [HttpPost]
         public ActionResult ChangePassword(SetPasswordView setPasswordView, string returnUrl = "")
         {
@@ -192,7 +192,19 @@ namespace ISSK_2_0.Controllers
             return RedirectToAction("Index");
         }
 
-        [Authorize(Roles = "Conductor, Manager, Moderator, Administrator")]
+        [CustomAuthorize(Roles = "Conductor, Manager, Moderator, Administrator")]
+        [HttpGet]
+        public ActionResult Edit()
+        {
+            using (var db = new IsskDb())
+            {
+                var user = db.Conductors.Include("ConductorData").FirstOrDefault(u => string.Compare(u.Email, HttpContext.User.Identity.Name, StringComparison.OrdinalIgnoreCase) == 0);
+                if (user == null) return RedirectToAction("Login");
+                return View(user);
+            }
+        }
+
+        [CustomAuthorize(Roles = "Conductor, Manager, Moderator, Administrator")]
         [HttpGet]
         public ActionResult List()
         {
@@ -203,14 +215,14 @@ namespace ISSK_2_0.Controllers
             }
         }
 
-        [Authorize(Roles = "Administrator")]
+        [CustomAuthorize(Roles = "Administrator")]
         [HttpGet]
         public ActionResult Create()
         {
             return View();
         }
 
-        [Authorize(Roles = "Administrator")]
+        [CustomAuthorize(Roles = "Administrator")]
         [HttpPost]
         public ActionResult Create(CreateView createView)
         {
@@ -257,7 +269,7 @@ namespace ISSK_2_0.Controllers
             return RedirectToAction("CreateResult", "Account");
         }
 
-        [Authorize(Roles = "Administrator")]
+        [CustomAuthorize(Roles = "Administrator")]
         [HttpGet]
         public ActionResult CreateResult(int? id)
         {
@@ -271,7 +283,7 @@ namespace ISSK_2_0.Controllers
             }
         }
 
-        [Authorize(Roles = "Conductor")]
+        [CustomAuthorize(Roles = "Conductor, Manager, Moderator, Administrator")]
         [HttpGet]
         public ActionResult LogOut()
         {

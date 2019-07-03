@@ -114,6 +114,8 @@ namespace ISSK_2_0.Models
         public string MiddleName { get; set; }
         public string LastName { get; set; }
         public string Avatar { get; set; }
+        public string PhoneNumber { get; set; }
+        public string City { get; set; }
         public string ActivationCode { get; set; }
         public List<string> RoleName { get; set; }
     }

@@ -16,10 +16,23 @@
             <p>
                 <strong>Adres Email:</strong> @Model.Email
             </p>
+            @if (Model.PhoneNumber != null)
+            {
+                <p>
+                    <strong>Numer telefonu:</strong> @Model.PhoneNumber
+                </p>
+            }
+            @if (Model.City != null)
+            {
+                <p>
+                    <strong>Miasto:</strong> @Model.City
+                </p>
+            }
             <p>
                 <strong>Rola:</strong> @Html.DisplayFor(i => Model.RoleName[Model.RoleName.Count - 1])
             </p>
-            @Html.ActionLink("Edytuj profil", "Edit", "Account", new { @class = "btn btn-primary"})
+            @Html.ActionLink("Edytuj profil", "Edit", "Account", new { @class = "btn btn-primary" })
+            @Html.ActionLink("Zmień hasło", "ChangePassword", "Account", new { @class = "btn btn-secondary" })
         </div>
     </div>
 </div>

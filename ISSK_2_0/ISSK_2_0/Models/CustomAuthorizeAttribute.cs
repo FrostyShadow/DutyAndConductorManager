@@ -11,8 +11,8 @@ namespace ISSK_2_0.Models
     {
         protected virtual CustomPrincipal CurrentUser => HttpContext.Current.User as CustomPrincipal;
 
-        protected override bool AuthorizeCore(HttpContextBase httpContext) =>
-            (CurrentUser == null || CurrentUser.IsInRole(Roles)) && CurrentUser != null;
+        /*protected override bool AuthorizeCore(HttpContextBase httpContext) =>
+            (CurrentUser == null || CurrentUser.IsInRole(Roles)) && CurrentUser != null;*/
 
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
