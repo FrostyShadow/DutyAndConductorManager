@@ -1,0 +1,116 @@
+﻿@model ISSK_2_0.Models.AccountView
+@{
+    ViewBag.Title = "Szczegóły konduktora";
+}
+
+    <div class="jumbotron">
+        <h4>@Model.FirstName @Model.LastName - @Html.DisplayFor(i => Model.RoleName[Model.RoleName.Count - 1])</h4>
+        <hr />
+        
+        <div class="row">
+            <div class="col-sm-4">
+                <img src="/@Model.Avatar" class="img-thumbnail" alt="@Model.FirstName @Model.LastName" />
+            </div>
+            <dl class="dl-horizontal">
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Code)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Code)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.FirstName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.MiddleName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.MiddleName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.LastName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.LastName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Email)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.PhoneNumber)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.PhoneNumber)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.City)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.City)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.IsTrained)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.IsTrainedDescriptor)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.RoleName)
+                </dt>
+
+                <dd>
+                    @foreach (var role in Model.RoleName)
+                    {
+                        @Html.DisplayFor(r => role)
+                        <br />
+                    }
+                </dd>
+
+                @if (User.IsInRole("Moderator") || User.IsInRole("Administrator"))
+                {
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ActivationCode)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.ActivationCode)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.LastActiveDateTime)
+                    </dt>
+
+                    <dd>
+                        @Model.LastActiveDateTime.ToString("yyyy-MM-dd HH:mm")
+                    </dd>
+                }
+
+            </dl>
+        </div>
+    </div>
+<p>
+    @Html.ActionLink("Edytuj", "EditUser", new { id = Model.ConductorId }, new { @class = "btn btn-warning" }) |
+    @Html.ActionLink("Powrót", "List", null, new { @class = "btn btn-info"})
+</p>

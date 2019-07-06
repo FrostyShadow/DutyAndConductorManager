@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -53,8 +54,12 @@ namespace ISSK_2_0.Models
         [Column(TypeName = "datetime2")]
         public DateTime BirthDate { get; set; }
         public string Pesel { get; set; }
-        public bool IsTrained { get; set; }       
+        public bool IsTrained { get; set; }
+        [Display(Name = "Czy przeszkolony?")]
+        [NotMapped]
+        public string IsTrainedDescriptor => IsTrained ? "Tak" : "Nie";   
         [Display(Name = "Numer telefonu")]
+        [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
         public string Avatar { get; set; }
         [Display(Name = "Miasto")]
@@ -108,15 +113,28 @@ namespace ISSK_2_0.Models
     public class AccountView
     {
         public int ConductorId { get; set; }
+        [Display(Name = "Nr legitymacji")]
         public int Code { get; set; }
         public string Email { get; set; }
+        [Display(Name = "Imie")]
         public string FirstName { get; set; }
+        [Display(Name = "Drugie imie")]
         public string MiddleName { get; set; }
+        [Display(Name = "Nazwisko")]
         public string LastName { get; set; }
         public string Avatar { get; set; }
+        [Display(Name = "Numer telefonu")]
         public string PhoneNumber { get; set; }
+        [Display(Name = "Miasto")]
         public string City { get; set; }
+        [Display(Name = "Kod aktywacyjny")]
         public string ActivationCode { get; set; }
+        [Display(Name = "Ostatnia aktywność")]
+        public DateTime LastActiveDateTime { get; set; }
+        [Display(Name = "Czy przeszkolony?")]
+        public bool IsTrained { get; set; }
+        public string IsTrainedDescriptor => IsTrained ? "Tak" : "Nie";
+        [Display(Name = "Role")]
         public List<string> RoleName { get; set; }
     }
 

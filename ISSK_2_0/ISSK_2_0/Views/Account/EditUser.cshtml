@@ -1,0 +1,95 @@
+﻿@model ISSK_2_0.Models.AccountView
+
+@{
+    ViewBag.Title = "Edycja konduktora";
+}
+
+    <div class="jumbotron">
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <h4>@ViewBag.Title</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Code, new { @class = "col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.FirstName, new { @class = "col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.MiddleName, new { @class = "col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.MiddleName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.MiddleName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.LastName, new { @class = "col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.PhoneNumber, new { @class = "col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.City, new { @class = "col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-check">
+                @Html.CheckBoxFor(model => model.IsTrained, new {@class = "form-check-input"})
+                @Html.LabelFor(model => model.IsTrained, new {@class = "form-check-label"})
+            </div>
+            <hr/>
+                @Html.LabelFor(model => model.RoleName, new {@class="col-md-2"})
+            foreach (var role in ViewBag.Roles)
+            {
+                <div class="form-check">
+                    @if (Model.RoleName.Contains(role.DisplayName))
+                    {
+                        <input class="form-check-input" type="checkbox" id="@role.Id" name="RoleName" value="@role.Name" checked=""/>
+                                                                                            
+                    }
+                    else
+                    {
+                        <input class="form-check-input" type="checkbox" id="@role.Id" name="RoleName" value="@role.Name" />
+                    }
+                    
+                    <label for="@role.Id" class="form-check-label">@role.DisplayName</label>
+                </div>
+            }
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    <button type="submit" class="btn btn-primary">Zapisz</button>
+                    @Html.ActionLink("Powrót do listy", "Index", null, new {@class="btn btn-danger"})
+                </div>
+            </div>
+        }
+        </div>

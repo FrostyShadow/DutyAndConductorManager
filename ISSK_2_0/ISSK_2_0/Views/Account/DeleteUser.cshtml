@@ -1,0 +1,57 @@
+﻿@model ISSK_2_0.Models.Conductor
+
+@{
+    ViewBag.Title = "Usuwanie konduktora";
+}
+
+<div class="jumbotron">
+    <h2>@ViewBag.Title</h2>
+    <hr/>
+    <h3>Czy jesteś pewny, że chcesz usunąć konto tego konduktora?</h3>
+    <div>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.ConductorData.FirstName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ConductorData.FirstName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ConductorData.LastName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ConductorData.LastName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Code)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Code)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+
+        </dl>
+
+        @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="hidden" value="@Model.ConductorId" name="ConductorId"/>
+                <input type="submit" value="Usuń" class="btn btn-danger"/> |
+                @Html.ActionLink("Anuluj", "List", null, new {@class = "btn btn-secondary"})
+            </div>
+        }
+    </div>
+    </div>

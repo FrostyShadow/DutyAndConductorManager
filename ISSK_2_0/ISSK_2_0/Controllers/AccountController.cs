@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Web;
@@ -13,7 +15,7 @@ namespace ISSK_2_0.Controllers
     public class AccountController : Controller
     {
         // GET: Account
-        [CustomAuthorize(Roles = "Conductor, Manager, Moderator, Administrator")]
+        [CustomAuthorize(Roles = "Conductor")]
         public ActionResult Index()
         {
             var user = (CustomMembershipUser) Membership.GetUser(HttpContext.User.Identity.Name, true);
@@ -23,8 +25,11 @@ namespace ISSK_2_0.Controllers
                 Code = user.Code,
                 Email = user.Email,
                 FirstName = user.ConductorData.FirstName,
+                MiddleName = user.ConductorData.MiddleName,
                 LastName = user.ConductorData.LastName,
                 Avatar = user.ConductorData.Avatar,
+                PhoneNumber = user.ConductorData.PhoneNumber,
+                City = user.ConductorData.City,
                 RoleName = user.Roles.Select(r => r.DisplayName).ToList()
             };
             return View(userModel);
@@ -59,7 +64,7 @@ namespace ISSK_2_0.Controllers
                             MiddleName = user.ConductorData.MiddleName,
                             LastName = user.ConductorData.LastName,
                             Avatar = user.ConductorData.Avatar,
-                            RoleName = user.Roles.Select(r => r.DisplayName).ToList()
+                            RoleName = user.Roles.Select(r => r.Name).ToList()
                         };
 
                         var userData = JsonConvert.SerializeObject(userModel);
@@ -192,7 +197,7 @@ namespace ISSK_2_0.Controllers
             return RedirectToAction("Index");
         }
 
-        [CustomAuthorize(Roles = "Conductor, Manager, Moderator, Administrator")]
+        [CustomAuthorize(Roles = "Conductor")]
         [HttpGet]
         public ActionResult Edit()
         {
@@ -204,7 +209,70 @@ namespace ISSK_2_0.Controllers
             }
         }
 
-        [CustomAuthorize(Roles = "Conductor, Manager, Moderator, Administrator")]
+        [CustomAuthorize(Roles = "Conductor")]
+        [HttpPost]
+        public ActionResult Edit(Conductor conductor, HttpPostedFileBase file)
+        {
+            if (ModelState.IsValid)
+            {
+                if (file != null && file.ContentLength > 0)
+                {
+                    try
+                    {
+                        var path = Path.Combine(Server.MapPath("~/Content/Images"),
+                            Path.GetFileName(file.FileName) ?? throw new InvalidOperationException());
+                        file.SaveAs(path);
+                        using (var db = new IsskDb())
+                        {
+                            var user = db.Conductors.Include("ConductorData").FirstOrDefault(u =>
+                                string.Compare(u.Email, HttpContext.User.Identity.Name,
+                                    StringComparison.OrdinalIgnoreCase) == 0);
+                            if (user != null)
+                            {
+                                user.ConductorData.Avatar = $"Content/Images/{Path.GetFileName(file.FileName)}";
+                                user.Code = conductor.Code;
+                                user.ConductorData.FirstName = conductor.ConductorData.FirstName;
+                                user.ConductorData.MiddleName = conductor.ConductorData.MiddleName;
+                                user.ConductorData.LastName = conductor.ConductorData.LastName;
+                                user.ConductorData.BirthDate = conductor.ConductorData.BirthDate;
+                                user.ConductorData.PhoneNumber = conductor.ConductorData.PhoneNumber;
+                                user.ConductorData.City = conductor.ConductorData.City;
+                                db.SaveChanges();
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        ModelState.AddModelError("", $@"Error: {ex.Message}");
+                        return View(conductor);
+                    }
+                }
+                else
+                {
+                    using (var db = new IsskDb())
+                    {
+                        var user = db.Conductors.Include("ConductorData").FirstOrDefault(u =>
+                            string.Compare(u.Email, HttpContext.User.Identity.Name,
+                                StringComparison.OrdinalIgnoreCase) == 0);
+                        if (user != null)
+                        {
+                            user.Code = conductor.Code;
+                            user.ConductorData.FirstName = conductor.ConductorData.FirstName;
+                            user.ConductorData.MiddleName = conductor.ConductorData.MiddleName;
+                            user.ConductorData.LastName = conductor.ConductorData.LastName;
+                            user.ConductorData.BirthDate = conductor.ConductorData.BirthDate;
+                            user.ConductorData.PhoneNumber = conductor.ConductorData.PhoneNumber;
+                            user.ConductorData.City = conductor.ConductorData.City;
+                            db.SaveChanges();
+                        }
+                    }
+                }
+            }
+
+            return RedirectToAction("Index", "Account");
+        }
+
+        [CustomAuthorize(Roles = "Conductor")]
         [HttpGet]
         public ActionResult List()
         {
@@ -283,7 +351,7 @@ namespace ISSK_2_0.Controllers
             }
         }
 
-        [CustomAuthorize(Roles = "Conductor, Manager, Moderator, Administrator")]
+        [CustomAuthorize(Roles = "Conductor")]
         [HttpGet]
         public ActionResult LogOut()
         {
@@ -303,6 +371,128 @@ namespace ISSK_2_0.Controllers
             const string chars = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%-+=/*\|";
             return new string(Enumerable.Repeat(chars,length)
                 .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
+        [CustomAuthorize(Roles = "Moderator, Administrator")]
+        [HttpGet]
+        public ActionResult EditUser(int id)
+        {
+            using (var db = new IsskDb())
+            {
+                var user = db.Conductors.Include("ConductorData").Include("Roles")
+                    .FirstOrDefault(u => u.ConductorId == id);
+                ViewBag.Roles = db.Roles.Select(r => r).ToList();
+                if (user == null) return RedirectToAction("List", "Account");
+                var accountView = new AccountView
+                {
+                    Code = user.Code,
+                    FirstName = user.ConductorData.FirstName,
+                    MiddleName = user.ConductorData.MiddleName,
+                    LastName = user.ConductorData.LastName,
+                    City = user.ConductorData.City,
+                    PhoneNumber = user.ConductorData.PhoneNumber,
+                    IsTrained = user.ConductorData.IsTrained,
+                    RoleName = user.Roles.Select(r => r.DisplayName).ToList()
+                };
+                return View(accountView);
+
+            }
+            
+        }
+
+        [CustomAuthorize(Roles = "Moderator, Administrator")]
+        [HttpPost]
+        public ActionResult EditUser(AccountView accountView, int id)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var db = new IsskDb())
+                {
+                    var user = db.Conductors.Include("ConductorData").Include("Roles")
+                        .FirstOrDefault(u => u.ConductorId == id);
+                    if(user == null) return RedirectToAction("List", "Account");
+                    user.Code = accountView.Code;
+                    user.ConductorData.FirstName = accountView.FirstName;
+                    user.ConductorData.MiddleName = accountView.MiddleName;
+                    user.ConductorData.LastName = accountView.LastName;
+                    user.ConductorData.PhoneNumber = accountView.PhoneNumber;
+                    user.ConductorData.City = accountView.City;
+                    user.ConductorData.IsTrained = accountView.IsTrained;
+                    foreach (var role in user.Roles.Select(r => r).ToList())
+                    {
+                        user.Roles.Remove(user.Roles.FirstOrDefault(r => r.Id == role.Id));
+                    }
+                    foreach (var role in accountView.RoleName)
+                    {
+                        user.Roles.Add(db.Roles.FirstOrDefault(r => string.Compare(r.Name, role, StringComparison.OrdinalIgnoreCase) == 0));
+                    }
+                    db.SaveChanges();
+                }
+            }
+
+            return RedirectToAction("List", "Account");
+        }
+
+        [CustomAuthorize(Roles = "Conductor")]
+        [HttpGet]
+        public ActionResult UserDetails(int id)
+        {
+            using (var db = new IsskDb())
+            {
+                var user = db.Conductors.Include("ConductorData").Include("Roles")
+                    .FirstOrDefault(r => r.ConductorId == id);
+                if (user != null)
+                {
+                    var userModel = new AccountView
+                    {
+                        ConductorId = user.ConductorId,
+                        Code = user.Code,
+                        Email = user.Email,
+                        FirstName = user.ConductorData.FirstName,
+                        MiddleName = user.ConductorData.MiddleName,
+                        LastName = user.ConductorData.LastName,
+                        Avatar = user.ConductorData.Avatar,
+                        PhoneNumber = user.ConductorData.PhoneNumber,
+                        City = user.ConductorData.City,
+                        IsTrained = user.ConductorData.IsTrained,
+                        ActivationCode = user.ActivationCode,
+                        LastActiveDateTime = user.LastActiveDateTime,
+                        RoleName = user.Roles.Select(r => r.DisplayName).ToList()
+                    };
+                    return View(userModel);
+                }
+
+                return RedirectToAction("List", "Account");
+            }
+        }
+
+        [CustomAuthorize(Roles = "Administrator")]
+        [HttpGet]
+        public ActionResult DeleteUser(int id)
+        {
+            using (var db = new IsskDb())
+            {
+                var user = db.Conductors.Include("ConductorData").FirstOrDefault(u => u.ConductorId == id);
+                return View(user);
+            }
+        }
+
+        [CustomAuthorize(Roles = "Administrator")]
+        [HttpPost]
+        public ActionResult DeleteUser(AccountView accountView)
+        {
+            if (!ModelState.IsValid) return RedirectToAction("List", "Account");
+            using (var db = new IsskDb())
+            {
+                var user = db.Conductors.FirstOrDefault(u => u.ConductorId == accountView.ConductorId);
+                if (user != null)
+                {
+
+                    db.Conductors.Remove(user);
+                    db.SaveChanges();
+                }
+            }
+            return RedirectToAction("List", "Account");
         }
     }
 }

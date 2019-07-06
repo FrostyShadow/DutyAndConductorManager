@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ISSK_2_0.Models;
 
 namespace ISSK_2_0.Controllers
 {
@@ -11,7 +12,11 @@ namespace ISSK_2_0.Controllers
         // GET: Duty
         public ActionResult Index()
         {
-            return View();
+            using (var db = new IsskDb())
+            {
+                var duties = db.Brigades.Select(d => d).ToList();
+                return duties.Count > 0 ? View(duties) : View();
+            }
         }
     }
 }
