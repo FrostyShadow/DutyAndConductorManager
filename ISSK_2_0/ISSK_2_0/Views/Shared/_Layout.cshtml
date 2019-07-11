@@ -32,7 +32,7 @@
                             @Html.ActionLink("Lista konduktorów", "List", "Account", new { }, new { @class = "dropdown-item" })
                         </div>
                     </li>
-                    if (User.IsInRole("Moderator"))
+                    if (User.IsInRole("Moderator") || User.IsInRole("Administrator"))
                     {
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="False">
@@ -42,7 +42,8 @@
                                 @Html.ActionLink("Konduktorzy", "List", "Account", new {}, new { @class = "dropdown-item"})
                                 @Html.ActionLink("Komunikaty", "List", "Notification", new {}, new { @class = "dropdown-item"})
                                 @Html.ActionLink("Sużby", "List", "Duty", new {}, new { @class = "dropdown-item"})
-                                @Html.ActionLink("Pojazdy", "List", "Vehicle", new {}, new { @class = "dropdown-item"})
+                                @Html.ActionLink("Pojazdy", "Index", "Vehicle", new {}, new { @class = "dropdown-item"})
+                                @Html.ActionLink("Składy", "Index", "Set", new { }, new { @class = "dropdown-item"})
                             </div>
                         </li>
                     }
