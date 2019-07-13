@@ -309,6 +309,7 @@
     <Content Include="Views\Set\Index.cshtml" />
     <Content Include="Views\Vehicle\Index.cshtml" />
     <Content Include="Views\Vehicle\Create.cshtml" />
+    <Content Include="Views\Vehicle\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

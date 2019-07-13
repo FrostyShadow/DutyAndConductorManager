@@ -29,6 +29,9 @@ namespace ISSK_2_0.Controllers
                         VehicleTypeName = vehicle.VehicleType.Name
                     });
                 }
+
+                if (TempData["State"] != null && string.Compare((string) TempData["State"], "InvalidId",
+                        StringComparison.OrdinalIgnoreCase) == 0) ViewBag.State = "InvalidId";
                 return View(vehiclesView);
             }
         }
@@ -75,9 +78,28 @@ namespace ISSK_2_0.Controllers
 
         [CustomAuthorize(Roles = "Moderator, Administrator")]
         [HttpGet]
-        public ActionResult Edit()
+        public ActionResult Edit(int id)
         {
-            return View();
+            using (var db = new IsskDb())
+            {
+                var vehicle = db.Vehicles.Include("VehicleType").FirstOrDefault(v => v.VehicleId == id);
+                if (vehicle == null)
+                {
+                    TempData["State"] = "InvalidId";
+                    return RedirectToAction("Index", "Vehicle");
+                }
+                var vehicleEdit = new VehicleCreateView
+                {
+                    Manufacturer = vehicle.Manufacturer,
+                    Model = vehicle.Model,
+                    SideNo = vehicle.SideNo,
+                    IsCoupleable = vehicle.IsCoupleable,
+                    VehicleTypeId = vehicle.TypeId,
+                    _vehicleTypes = db.VehicleTypes.Select(vt => vt).ToList()
+                };
+                return View(vehicleEdit);
+
+            }
         }
 
         [CustomAuthorize(Roles = "Moderator, Administrator")]
