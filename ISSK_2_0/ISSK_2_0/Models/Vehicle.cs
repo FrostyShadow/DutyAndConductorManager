@@ -59,4 +59,16 @@ namespace ISSK_2_0.Models
 
         public IEnumerable<SelectListItem> VehicleTypes => new SelectList(_vehicleTypes, "VehicleTypeId", "Name");
     }
+
+    public class VehilceDeleteView
+    {
+        [Display(Name = "Numer taborowy")]
+        public string SideNo { get; set; }
+        [Display(Name = "Producent")]
+        public string Manufacturer { get; set; }
+        [Display(Name = "Model")]
+        public string Model { get; set; }
+        [Display(Name = "Typ pojazdu")]
+        public string VehilceTypeName { get; set; }
+    }
 }

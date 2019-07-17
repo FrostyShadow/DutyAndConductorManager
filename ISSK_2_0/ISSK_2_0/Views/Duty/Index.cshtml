@@ -61,7 +61,7 @@
                     </th>
                 </tr>
                 </thead>
-                <tbody class="text-center">
+                <tbody class="text-center bg-light">
                 <tr>
                     @for (var a = 1; a < dayOfWeekFirstInCurrentMonth; a++)
                     {
@@ -72,21 +72,29 @@
                     {
                         var renderedDay = new DateTime(currentMonthYear, currentMonth, i);
 
-                        if (renderedDay.DayOfWeek == DayOfWeek.Sunday)
-                        {
-                            @:<td>@i</td></tr><tr>
-                        }
-                        else if (renderedDay.Date == DateTime.Today && renderedDay.DayOfWeek == DayOfWeek.Sunday)
+                        if (renderedDay.Date == DateTime.Today && renderedDay.DayOfWeek == DayOfWeek.Sunday)
                         {
                             @:<td class="text-danger font-weight-bold">@i</td></tr><tr>
+                        }
+                        else if (renderedDay.Date < DateTime.Today && renderedDay.DayOfWeek == DayOfWeek.Sunday)
+                        {
+                            @:<td class="text-muted">@i</td></tr><tr>
+                        }
+                        else if (renderedDay.DayOfWeek == DayOfWeek.Sunday)
+                        {
+                            @:<td class="font-weight-bold">@i</td></tr><tr>
                         }
                         else if (renderedDay.Date == DateTime.Today)
                         {
                             @:<td class="text-danger font-weight-bold">@i</td>
                         }
+                        else if (renderedDay.Date < DateTime.Today)
+                        {
+                            @:<td class="text-muted">@i</td>
+                        }
                         else
                         {
-                            @:<td>@i</td>
+                            @:<td class="font-weight-bold">@i</td>
                         }            
                     }
                 
@@ -126,7 +134,7 @@
                     </th>
                 </tr>
                 </thead>
-                <tbody class="text-center">
+                <tbody class="text-center bg-light">
                 <tr>
                     @for (var a = 1; a < dayOfWeekFirstInNextMonth; a++)
                     {
@@ -139,11 +147,11 @@
 
                         if (renderedDay.DayOfWeek == DayOfWeek.Sunday)
                         {
-                            @:<td>@i</td></tr><tr>
+                            @:<td class="font-weight-bold">@i</td></tr><tr>
                         }
                         else
                         {
-                            @:<td>@i</td>
+                            @:<td class="font-weight-bold">@i</td>
                         }            
                     }
                     
@@ -160,10 +168,11 @@
     <div class="row">
         <h4 class="col-md-12">Legenda:</h4>
         <ul class="col-md-12 list-unstyled">
+            <li><span class="text-muted">Tekst blady</span> - data przeszła</li>
             <li><span class="font-weight-bold text-danger">Tekst czerwony</span> - data dzisiejsza</li>
-            <li><span class="text-success">Tekst zielony</span> - nadchodząca służba</li>
-            <li><span class="text-info">Tekst niebieski</span> - przyszłe służby</li>
-            <li><span class="bg-secondary pr-1 pl-1">Szare tło</span> - okres zapisu</li>
+            <li><span class="font-weight-bold text-success">Tekst zielony</span> - nadchodząca służba</li>
+            <li><span class="font-weight-bold text-info">Tekst niebieski</span> - przyszłe służby</li>
+            <li><span class="font-weight-bold bg-secondary text-light pr-1 pl-1">Szare tło</span> - okres zapisu</li>
         </ul>
     </div>
 </div>

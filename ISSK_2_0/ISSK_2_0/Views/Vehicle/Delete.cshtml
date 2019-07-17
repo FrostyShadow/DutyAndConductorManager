@@ -1,0 +1,55 @@
+﻿@model ISSK_2_0.Models.VehilceDeleteView
+
+@{
+    ViewBag.Title = "Usuń pojazd";
+}
+
+
+<div class="jumbotron">
+    <h3>Czy jesteś pewien, że chcesz usunąć ten pojazd?</h3>
+    <hr/>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.VehilceTypeName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VehilceTypeName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Manufacturer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Manufacturer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Model)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Model)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SideNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SideNo)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Usuń" class="btn btn-primary"/> |
+            @Html.ActionLink("Powrót do listy", "Index", null, new {@class = "btn btn-danger"})
+        </div>
+    }
+</div>

@@ -30,8 +30,7 @@ namespace ISSK_2_0.Controllers
                     });
                 }
 
-                if (TempData["State"] != null && string.Compare((string) TempData["State"], "InvalidId",
-                        StringComparison.OrdinalIgnoreCase) == 0) ViewBag.State = "InvalidId";
+                if (TempData["State"] != null) ViewBag.State = TempData["State"];
                 return View(vehiclesView);
             }
         }
@@ -103,10 +102,75 @@ namespace ISSK_2_0.Controllers
         }
 
         [CustomAuthorize(Roles = "Moderator, Administrator")]
-        [HttpGet]
-        public ActionResult Delete()
+        [HttpPost]
+        public ActionResult Edit(VehicleCreateView vehicleCreateView, int id)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                using (var db = new IsskDb())
+                {
+                    var vehicle = db.Vehicles.Include("VehicleType").FirstOrDefault(v => v.VehicleId == id);
+                    if (vehicle == null) return RedirectToAction("Index", "Vehicle");
+                    vehicle.SideNo = vehicleCreateView.SideNo;
+                    vehicle.Model = vehicleCreateView.Model;
+                    vehicle.Manufacturer = vehicleCreateView.Manufacturer;
+                    vehicle.IsCoupleable = vehicleCreateView.IsCoupleable;
+                    vehicle.TypeId = vehicleCreateView.VehicleTypeId;
+                    db.SaveChanges();
+                    TempData["State"] = "EditSuccess";
+                    return RedirectToAction("Index", "Vehicle");
+                }
+            }
+
+            ModelState.AddModelError("", "Błąd: Coś poszło nie tak, skontatkuj się z administratorem.");
+            return View(vehicleCreateView);
+        }
+
+        [CustomAuthorize(Roles = "Moderator, Administrator")]
+        [HttpGet]
+        public ActionResult Delete(int id)
+        {
+            using (var db = new IsskDb())
+            {
+                var vehicle = db.Vehicles.Include("VehicleType").FirstOrDefault(v => v.VehicleId == id);
+                if (vehicle == null)
+                {
+                    TempData["State"] = "InvalidId";
+                    return RedirectToAction("Index", "Vehicle");
+                }
+                var vehicleView = new VehilceDeleteView
+                {
+                    Manufacturer = vehicle.Manufacturer,
+                    Model = vehicle.Model,
+                    SideNo = vehicle.SideNo,
+                    VehilceTypeName = vehicle.VehicleType.Name
+                };
+                return View(vehicleView);
+            }
+        }
+
+        [CustomAuthorize(Roles = "Moderator, Administrator")]
+        [HttpPost]
+        public ActionResult Delete(VehilceDeleteView vehicleDeleteView, int id)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var db = new IsskDb())
+                {
+                    var vehicle = db.Vehicles.FirstOrDefault(v => v.VehicleId == id);
+                    if (vehicle == null)
+                    {
+                        TempData["State"] = "InvalidId";
+                        return RedirectToAction("Index", "Vehicle");
+                    }
+                    db.Vehicles.Remove(vehicle);
+                    db.SaveChanges();
+                    TempData["State"] = "DeleteSuccess";
+                    return RedirectToAction("Index", "Vehicle");
+                }
+            }
+            ModelState.AddModelError("", "Błąd: Coś poszło nie tak, skontaktuj się z administratorem.");
+            return View(vehicleDeleteView);
         }
     }
 }
