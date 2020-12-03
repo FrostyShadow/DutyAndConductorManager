@@ -6,6 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
+using DutyAndConductorManager.Blazor.Server.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DutyAndConductorManager.Blazor.Server
 {
@@ -22,7 +24,10 @@ namespace DutyAndConductorManager.Blazor.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddDbContext<DutyAndConductorContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("DutyAndConductorDb"));
+            });
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
