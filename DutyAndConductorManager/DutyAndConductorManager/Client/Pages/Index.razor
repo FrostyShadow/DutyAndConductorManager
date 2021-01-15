@@ -1,7 +1,30 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
+<h2>Witamy w systemie zarządzania służbami konduktorskimi Krakowskiej Linii Muzealnej!</h2>
 
-Welcome to your new app.
+<h4>Komunikaty dla konduktorów:</h4>
+@for (var i = 1; i <= 10; i++)
+{
+    var header = $"Header {i}";
+    var body = $"Body {i}";
+    foreach (var type in types)
+    {
+        <Announcement HeaderText="@header" BodyText="@body" Type="@type" />
+    }
+}
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+@code
+{
+    private string[] types = {
+        "bg-info",
+        "bg-success",
+        "bg-warning",
+        "bg-danger",
+        "bg-info",
+        "bg-success",
+        "bg-warning",
+        "bg-danger",
+        "bg-info",
+        "bg-success"
+    };
+}
