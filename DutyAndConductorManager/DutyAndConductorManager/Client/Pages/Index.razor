@@ -1,7 +1,37 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
+<MudContainer>
+    <MudText Typo="Typo.h5">Witamy w systemie planowania służb konduktorskich Krakowskiej Linii Muzealnej!</MudText>
 
-Welcome to your new app.
+    <MudText Typo="Typo.h6">Komunikaty dla konduktorów:</MudText>
+    <MudGrid>
+    @for (var i = 1; i <= 10; i++)
+    {
+        var header = $"Header {i}";
+        var body = $"Body {i}";
+        foreach (var type in types)
+        {
+            <MudItem xs="12">
+    <Announcement SenderName="@header" AnnouncementDate="@DateTime.Now" BodyText="@body"/>       
+            </MudItem>
+    }
+    }
+    </MudGrid>
+</MudContainer>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+@code
+{
+    private readonly string[] types =
+    {
+        "bg-info",
+        "bg-success",
+        "bg-warning",
+        "bg-danger",
+        "bg-info",
+        "bg-success",
+        "bg-warning",
+        "bg-danger",
+        "bg-info",
+        "bg-success"
+    };
+}

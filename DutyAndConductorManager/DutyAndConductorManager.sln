@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30803.129
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DutyAndConductorManager.Server", "DutyAndConductorManager\Server\DutyAndConductorManager.Server.csproj", "{ACFB926F-47AB-4313-8E0C-7B61A330F337}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DutyAndConductorManager.Server", "DutyAndConductorManager\Server\DutyAndConductorManager.Server.csproj", "{ACFB926F-47AB-4313-8E0C-7B61A330F337}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DutyAndConductorManager.Client", "DutyAndConductorManager\Client\DutyAndConductorManager.Client.csproj", "{F2219196-BFB9-41A2-87EC-122BAC6A8167}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DutyAndConductorManager.Client", "DutyAndConductorManager\Client\DutyAndConductorManager.Client.csproj", "{F2219196-BFB9-41A2-87EC-122BAC6A8167}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DutyAndConductorManager.Shared", "DutyAndConductorManager\Shared\DutyAndConductorManager.Shared.csproj", "{0DD231A2-90F8-4BFA-9B08-5EAA6CB0C39C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DutyAndConductorManager.Shared", "DutyAndConductorManager\Shared\DutyAndConductorManager.Shared.csproj", "{0DD231A2-90F8-4BFA-9B08-5EAA6CB0C39C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
