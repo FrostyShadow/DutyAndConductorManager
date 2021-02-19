@@ -1,19 +1,28 @@
 ﻿
-<div class="card @Type" style="margin-bottom: 15px;">
-    <div class="card-header">
-        @HeaderText
-    </div>
-    <div class="card-body">
-        @BodyText
-    </div>
-</div>
+<MudCard>
+    <MudCardHeader>
+        <CardHeaderAvatar>
+            <MudAvatar Color="Color.Secondary">I</MudAvatar>
+        </CardHeaderAvatar>
+        <CardHeaderContent>
+            <MudText Typo="Typo.body1">@SenderName</MudText>
+            <MudText Typo="Typo.body2">@AnnouncementDate</MudText>
+        </CardHeaderContent>
+        <CardHeaderActions>
+            <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Default" />
+        </CardHeaderActions>
+    </MudCardHeader>
+    <MudCardContent>
+        <MudText Typo="Typo.body2">@BodyText</MudText>
+    </MudCardContent>
+</MudCard>
 
 
 @code {
     [Parameter]
-    public string HeaderText { get; set; }
+    public string SenderName { get; set; }
+    [Parameter]
+    public DateTime AnnouncementDate {get; set; }
     [Parameter]
     public string BodyText { get; set; }
-    [Parameter]
-    public string Type { get; set; }
 }

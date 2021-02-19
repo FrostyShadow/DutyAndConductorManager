@@ -1,21 +1,28 @@
 ﻿@page "/"
 
-<h2>Witamy w systemie zarządzania służbami konduktorskimi Krakowskiej Linii Muzealnej!</h2>
+<MudContainer>
+    <MudText Typo="Typo.h5">Witamy w systemie planowania służb konduktorskich Krakowskiej Linii Muzealnej!</MudText>
 
-<h4>Komunikaty dla konduktorów:</h4>
-@for (var i = 1; i <= 10; i++)
-{
-    var header = $"Header {i}";
-    var body = $"Body {i}";
-    foreach (var type in types)
+    <MudText Typo="Typo.h6">Komunikaty dla konduktorów:</MudText>
+    <MudGrid>
+    @for (var i = 1; i <= 10; i++)
     {
-        <Announcement HeaderText="@header" BodyText="@body" Type="@type" />
+        var header = $"Header {i}";
+        var body = $"Body {i}";
+        foreach (var type in types)
+        {
+            <MudItem xs="12">
+    <Announcement SenderName="@header" AnnouncementDate="@DateTime.Now" BodyText="@body"/>       
+            </MudItem>
     }
-}
+    }
+    </MudGrid>
+</MudContainer>
 
 @code
 {
-    private string[] types = {
+    private readonly string[] types =
+    {
         "bg-info",
         "bg-success",
         "bg-warning",
